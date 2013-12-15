@@ -70,7 +70,7 @@ class Palette
                 $this->int_b = $mix_param_1->b;
             }
             // HSL
-            elseif(isset($mix_param_1->s))
+            elseif(isset($mix_param_1->l))
             {
                 //TODO Add test
                 $this->fromHsl($mix_param_1->h, $mix_param_1->s, $mix_param_1->l);
@@ -314,6 +314,55 @@ class Palette
      */
     protected function fromHsv($float_h, $float_s, $float_v)
     {
+        $float_chroma = $float_s * $float_v;
+        $float_hp = $float_h / 60;
+        $float_x = $float_chroma * (1 - abs($float_hp % 2 - 1));
+        $float_m = $float_v - $float_chroma;
+
+        if($float_h == 0 && $float_s == 0 && $float_v == 0)
+        {
+            $float_rp = $float_gp = $float_bp = 0;
+        }
+        elseif($float_hp < 1)
+        {
+            $float_rp = $float_chroma;
+            $float_gp = $float_x;
+            $float_bp = 0;
+        }
+        elseif($float_hp < 2)
+        {
+            $float_rp = $float_x;
+            $float_gp = $float_chroma;
+            $float_bp = 0;
+        }
+        elseif($float_hp < 3)
+        {
+            $float_rp = 0;
+            $float_gp = $float_chroma;
+            $float_bp = $float_x;
+        }
+        elseif($float_hp < 4)
+        {
+            $float_rp = 0;
+            $float_gp = $float_x;
+            $float_bp = $float_chroma;
+        }
+        elseif($float_hp < 5)
+        {
+            $float_rp = $float_x;
+            $float_gp = 0;
+            $float_bp = $float_chroma;
+        }
+        elseif($float_hp < 6)
+        {
+            $float_rp = $float_chroma;
+            $float_gp = 0;
+            $float_bp = $float_x;
+        }
+
+        $this->int_r = ceil(($float_rp + $float_m) * 255);
+        $this->int_g = ceil(($float_gp + $float_m) * 255);
+        $this->int_b = ceil(($float_bp + $float_m) * 255);
     }
 
 
@@ -433,7 +482,7 @@ class Palette
      * 
      * @todo Use ICC file/data to have the right value.
      * @access public
-     * @return stdClass
+     * @return \stdClass
      */
     public function cmyk()
     {
