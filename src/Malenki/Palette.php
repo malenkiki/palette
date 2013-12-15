@@ -26,6 +26,31 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 namespace Malenki;
 
 
+/**
+ * Palette, to deal with colors!
+ *
+ * Palette can deal with RGB, HLS, HLV and CMYK (but not with ICC yet) colors.
+ *
+ * Using it is very simple:
+ *  * Constructor can accept every color represntation (by array, object, params…).
+ *  * You have magic get access to some channels.
+ *  * You can test whether color is similar to another
+ *  * CSS color name
+ * 
+ * @property-read $r Red channel of RGB
+ * @property-read $g Green channel of RGB
+ * @property-read $b Blue channel of RGB
+ * @property-read $h Hue channel of HSL or HSV
+ * @property-read $s Saturation channel of HSL or HSV
+ * @property-read $l Lighness channel of HSL
+ * @property-read $v Value channel of HSV
+ * @property-read $c Cyan channel of CMYK
+ * @property-read $m Magenta channel of CMYK
+ * @property-read $y Yellow channel of CMYK
+ * @property-read $k Black channel of CMYK
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class Palette
 {
     protected $int_r = 0;
@@ -42,6 +67,33 @@ class Palette
         else
         {
             throw \InvalidArgumentException('Preision must be greater or equal to 2');
+        }
+    }
+
+    public function __get($name)
+    {
+        if(in_array($name, array('r','g','b','c','m','y','k','h','s','l','v')))
+        {
+            if(in_array($name, array('r', 'g', 'b')))
+            {
+                return $this->rgb()->$name;
+            }
+            elseif(in_array($name, array('c', 'm', 'y', 'k')))
+            {
+                return $this->cmyk()->$name;
+            }
+            elseif(in_array($name, array('h', 's')))
+            {
+                return $this->hsl()->$name;
+            }
+            elseif($name == 'l')
+            {
+                return $this->hsl()->$name;
+            }
+            elseif($name == 'v')
+            {
+                return $this->hsv()->$name;
+            }
         }
     }
 

@@ -31,6 +31,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
     public function testRgb()
     {
+        // Black
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 0;
@@ -38,6 +39,57 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette(0,0,0);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+
+        // White
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 255;
+        $rgb->b = 255;
+
+        $p = new Malenki\Palette(255,255,255);
+        $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+
+        // Red
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 0;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette(255,0,0);
+        $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        
+        // Green
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 255;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette(0,255,0);
+        $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        
+        // Blue
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 0;
+        $rgb->b = 255;
+
+        $p = new Malenki\Palette(0,0,255);
+        $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
     }
 
 
@@ -53,6 +105,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
     public function testFromHsl()
     {
+        Malenki\Palette::precision(2);
         // black
         $hsl = new \stdClass();
         $hsl->h = 0;
@@ -66,6 +119,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
         
         // white
         $hsl = new \stdClass();
@@ -79,6 +139,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 255;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
         
         // red
         $hsl = new \stdClass();
@@ -92,6 +159,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
 
         // lime
         $hsl = new \stdClass();
@@ -105,6 +179,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
 
         // blue
         $hsl = new \stdClass();
@@ -118,6 +199,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 255;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
 
         // Yellow
         $hsl = new \stdClass();
@@ -130,6 +218,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
 
         // Cyan
         $hsl = new \stdClass();
@@ -142,6 +237,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 255;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Magenta
         $hsl = new \stdClass();
@@ -154,6 +256,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 255;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Silver
         $hsl = new \stdClass();
@@ -166,6 +275,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 192;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Gray
         $hsl = new \stdClass();
@@ -178,6 +294,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Maroon
         $hsl = new \stdClass();
@@ -190,6 +313,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Olive
         $hsl = new \stdClass();
@@ -202,6 +332,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Green
         $hsl = new \stdClass();
@@ -214,6 +351,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Purple
         $hsl = new \stdClass();
@@ -226,6 +370,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Teal
         $hsl = new \stdClass();
@@ -238,6 +389,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     
         // Navy
         $hsl = new \stdClass();
@@ -250,6 +408,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsl);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsl->h, $p->h);
+        $this->assertEquals($hsl->s, $p->s);
+        $this->assertEquals($hsl->l, $p->l);
+        //$this->assertEquals(0, $p->v);
     }
 
     public function testHsl()
@@ -393,6 +558,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
         // white
         $hsv = new \stdClass();
@@ -407,6 +579,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // red
@@ -422,6 +601,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
         // lime
         $hsv = new \stdClass();
@@ -436,6 +622,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // blue
@@ -451,6 +644,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Yellow
@@ -466,6 +666,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Cyan
@@ -480,6 +687,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 255;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Magenta
@@ -494,6 +708,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 255;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
         
         // Silver
@@ -508,6 +729,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 192;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
         
         // Gray
@@ -522,6 +750,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Maroon
@@ -536,6 +771,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Olive
@@ -550,6 +792,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Green
@@ -564,6 +813,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 0;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Purple
@@ -578,6 +834,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Teal
@@ -592,6 +855,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
         // Navy
@@ -606,6 +876,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $rgb->b = 128;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals($rgb, $p->rgb());
+        $this->assertEquals($rgb->r, $p->r);
+        $this->assertEquals($rgb->g, $p->g);
+        $this->assertEquals($rgb->b, $p->b);
+        $this->assertEquals($hsv->h, $p->h);
+        $this->assertEquals($hsv->s, $p->s);
+        $this->assertEquals($hsv->v, $p->v);
+        //$this->assertEquals(0, $p->l);
 
 
     }
