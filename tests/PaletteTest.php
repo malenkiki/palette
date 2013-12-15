@@ -93,6 +93,44 @@ class PaletteTest extends PHPUnit_Framework_TestCase
     }
 
 
+
+    public function testFromHex()
+    {
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 0;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette('#000000');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('000000');
+        $this->assertEquals($rgb, $p->rgb());
+        
+        
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 255;
+        $rgb->b = 255;
+
+        $p = new Malenki\Palette('#ffffff');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('ffffff');
+        $this->assertEquals($rgb, $p->rgb());
+        
+        
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 0;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette('#FF0000');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('FF0000');
+        $this->assertEquals($rgb, $p->rgb());
+    }
+
+
+
     public function testHex()
     {
         $p = new Malenki\Palette(0,0,0);
@@ -1093,5 +1131,6 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $p = new Malenki\Palette(0xff, 0, 0xff);
         $this->assertEquals($cmyk, $p->cmyk());
     }
+
 
 }

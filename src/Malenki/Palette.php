@@ -32,7 +32,7 @@ namespace Malenki;
  * Palette can deal with RGB, HLS, HLV and CMYK (but not with ICC yet) colors.
  *
  * Using it is very simple:
- *  * Constructor can accept every color represntation (by array, object, params…).
+ *  * Constructor can accept every color represntation (by array, object, string, params…).
  *  * You have magic get access to some channels.
  *  * You can test whether color is similar to another
  *  * CSS color name
@@ -203,6 +203,22 @@ class Palette
                 $this->int_r = $mix_param_1;
                 $this->int_g = $mix_param_2;
                 $this->int_b = $mix_param_3;
+            }
+            // RGB hex string
+            elseif(
+                is_string($mix_param_1)
+                &&
+                preg_match('/#{0,1}[0-9A-Fa-f]{6}/', $mix_param_1)
+            )
+            {
+                $arr = str_split(
+                    preg_replace('/[^0-9A-Fa-f]/', '', $mix_param_1),
+                    2
+                );
+
+                $this->int_r = hexdec($arr[0]);
+                $this->int_g = hexdec($arr[1]);
+                $this->int_b = hexdec($arr[2]);
             }
             else
             {
