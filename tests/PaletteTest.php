@@ -141,6 +141,56 @@ class PaletteTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testFromName()
+    {
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 0;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette('black');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('BLACK');
+        $this->assertEquals($rgb, $p->rgb());
+        
+        
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 255;
+        $rgb->b = 255;
+
+        $p = new Malenki\Palette('white');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('WHITE');
+        $this->assertEquals($rgb, $p->rgb());
+        
+        
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 0;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette('red');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('RED');
+        $this->assertEquals($rgb, $p->rgb());
+        
+        $rgb = new \stdClass();
+        $rgb->r = 0xff;
+        $rgb->g = 0x8c;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette('DarkOrange');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('darkorange');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('DARKORANGE');
+        $this->assertEquals($rgb, $p->rgb());
+        $p = new Malenki\Palette('dark-orange');
+        $this->assertEquals($rgb, $p->rgb());
+    }
+
+
     public function testFromHsl()
     {
         Malenki\Palette::precision(2);
