@@ -765,7 +765,12 @@ class Palette
      */
     public function hex()
     {
-        return sprintf('#%02X%02X%02X', $this->int_r, $this->int_g, $this->int_b);
+        return sprintf(
+            '#%02X%02X%02X',
+            $this->int_r,
+            $this->int_g,
+            $this->int_b
+        );
     }
 
     public function isStandardCss()
@@ -776,9 +781,35 @@ class Palette
     {
     }
 
+    public function isCss()
+    {
+    }
+
     public function cssName()
     {
     }
+
+    public function complementary()
+    {
+        $hsl = $this->hsl();
+        
+        $complementary = new \stdClass();
+        $complementary->s = $hsl->s;
+        $complementary->l = $hsl->l;
+
+
+        if($hsl->h < 180)
+        {
+            $complementary->h = $hsl->h + 180;
+        }
+        else
+        {
+            $complementary->h = $hsl->h - 180;
+        }
+
+        return new self($complementary);
+    }
+
 
 
     public function isSimilar(Palette $color)

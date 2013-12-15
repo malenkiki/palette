@@ -1183,4 +1183,30 @@ class PaletteTest extends PHPUnit_Framework_TestCase
     }
 
 
+
+    public function testComplementary()
+    {
+        $hsv = new \stdClass();
+        $hsv->h = 240;
+        $hsv->s = 1;
+        $hsv->v = 0.5;
+        $p = new Malenki\Palette($hsv);
+        $this->assertEquals(60, $p->complementary()->h);
+        
+        $hsv = new \stdClass();
+        $hsv->h = 60;
+        $hsv->s = 1;
+        $hsv->v = 0.5;
+        $p = new Malenki\Palette($hsv);
+        $this->assertEquals(240, $p->complementary()->h);
+        
+        $hsv = new \stdClass();
+        $hsv->h = 10;
+        $hsv->s = 1;
+        $hsv->v = 0.5;
+        $p = new Malenki\Palette($hsv);
+        var_dump($p->complementary()->hsl()); //TODO: bug? or misunderstanding?
+        $this->assertEquals(290, $p->complementary()->hsl()->h);
+    }
+
 }
