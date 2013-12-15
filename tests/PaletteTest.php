@@ -45,6 +45,211 @@ class PaletteTest extends PHPUnit_Framework_TestCase
     {
         $p = new Malenki\Palette(0,0,0);
         $this->assertEquals('#000000', $p->hex());
+        
+        $p = new Malenki\Palette(255,255,255);
+        $this->assertEquals('#FFFFFF', $p->hex());
+    }
+
+
+    public function testFromHsl()
+    {
+        // black
+        $hsl = new \stdClass();
+        $hsl->h = 0;
+        $hsl->s = 0;
+        $hsl->l = 0;
+
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 0;
+        $rgb->b = 0;
+
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+        
+        // white
+        $hsl = new \stdClass();
+        $hsl->h = 0;
+        $hsl->s = 0;
+        $hsl->l = 1;
+
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 255;
+        $rgb->b = 255;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+        
+        // red
+        $hsl = new \stdClass();
+        $hsl->h = 0;
+        $hsl->s = 1;
+        $hsl->l = 1/2;
+        
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 0;
+        $rgb->b = 0;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+
+        // lime
+        $hsl = new \stdClass();
+        $hsl->h = 120;
+        $hsl->s = 1;
+        $hsl->l = 1/2;
+        
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 255;
+        $rgb->b = 0;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+
+        // blue
+        $hsl = new \stdClass();
+        $hsl->h = 240;
+        $hsl->s = 1;
+        $hsl->l = 1/2;
+        
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 0;
+        $rgb->b = 255;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+
+        // Yellow
+        $hsl = new \stdClass();
+        $hsl->h = 60;
+        $hsl->s = 1;
+        $hsl->l = 1/2;
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 255;
+        $rgb->b = 0;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+
+        // Cyan
+        $hsl = new \stdClass();
+        $hsl->h = 180;
+        $hsl->s = 1;
+        $hsl->l = 1/2;
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 255;
+        $rgb->b = 255;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Magenta
+        $hsl = new \stdClass();
+        $hsl->h = 300;
+        $hsl->s = 1;
+        $hsl->l = 1/2;
+        $rgb = new \stdClass();
+        $rgb->r = 255;
+        $rgb->g = 0;
+        $rgb->b = 255;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Silver
+        $hsl = new \stdClass();
+        $hsl->h = 0;
+        $hsl->s = 0;
+        $hsl->l = 0.75;
+        $rgb = new \stdClass();
+        $rgb->r = 192;
+        $rgb->g = 192;
+        $rgb->b = 192;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Gray
+        $hsl = new \stdClass();
+        $hsl->h = 0;
+        $hsl->s = 0;
+        $hsl->l = 0.5;
+        $rgb = new \stdClass();
+        $rgb->r = 128;
+        $rgb->g = 128;
+        $rgb->b = 128;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Maroon
+        $hsl = new \stdClass();
+        $hsl->h = 0;
+        $hsl->s = 1;
+        $hsl->l = 0.25;
+        $rgb = new \stdClass();
+        $rgb->r = 128;
+        $rgb->g = 0;
+        $rgb->b = 0;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Olive
+        $hsl = new \stdClass();
+        $hsl->h = 60;
+        $hsl->s = 1;
+        $hsl->l = 0.25;
+        $rgb = new \stdClass();
+        $rgb->r = 128;
+        $rgb->g = 128;
+        $rgb->b = 0;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Green
+        $hsl = new \stdClass();
+        $hsl->h = 120;
+        $hsl->s = 1;
+        $hsl->l = 0.25;
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 128;
+        $rgb->b = 0;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Purple
+        $hsl = new \stdClass();
+        $hsl->h = 300;
+        $hsl->s = 1;
+        $hsl->l = 0.25;
+        $rgb = new \stdClass();
+        $rgb->r = 128;
+        $rgb->g = 0;
+        $rgb->b = 128;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Teal
+        $hsl = new \stdClass();
+        $hsl->h = 180;
+        $hsl->s = 1;
+        $hsl->l = 0.25;
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 128;
+        $rgb->b = 128;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
+    
+        // Navy
+        $hsl = new \stdClass();
+        $hsl->h = 240;
+        $hsl->s = 1;
+        $hsl->l = 0.25;
+        $rgb = new \stdClass();
+        $rgb->r = 0;
+        $rgb->g = 0;
+        $rgb->b = 128;
+        $p = new Malenki\Palette($hsl);
+        $this->assertEquals($rgb, $p->rgb());
     }
 
     public function testHsl()

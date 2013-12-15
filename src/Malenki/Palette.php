@@ -69,17 +69,17 @@ class Palette
                 $this->int_g = $mix_param_1->g;
                 $this->int_b = $mix_param_1->b;
             }
-            // HLS
+            // HSL
             elseif(isset($mix_param_1->s))
             {
                 //TODO Add test
-                $this->fromHls($mix_param_1->h, $mix_param_1->l, $mix_param_1->s);
+                $this->fromHsl($mix_param_1->h, $mix_param_1->s, $mix_param_1->l);
             }
-            // HLV
+            // HSV
             elseif(isset($mix_param_1->v))
             {
                 //TODO Add test
-                $this->fromHlv($mix_param_1->h, $mix_param_1->l, $mix_param_1->v);
+                $this->fromHsv($mix_param_1->h, $mix_param_1->s, $mix_param_1->v);
             }
             // CMYK
             elseif(isset($mix_param_1->k))
@@ -164,7 +164,7 @@ class Palette
      * fromHsl 
      * 
      * @see http://en.wikipedia.org/wiki/HSL_color_space#Converting_to_RGB
-     * @param float $float_h 
+     * @param float $float_h Angle, 0 to 360° 
      * @param float $float_s 
      * @param float $float_l 
      * @access protected
@@ -172,6 +172,55 @@ class Palette
      */
     protected function fromHsl($float_h, $float_s, $float_l)
     {
+        $float_chroma = $float_s * (1 - abs(2 * $float_l - 1));
+        $float_hp = $float_h / 60;
+        $float_x = $float_chroma * (1 - abs($float_hp % 2 - 1));
+        $float_m = $float_l - $float_chroma / 2;
+
+        if($float_h == 0 && $float_s == 0 && $float_l == 0)
+        {
+            $float_rp = $float_gp = $float_bp = 0;
+        }
+        elseif($float_hp < 1)
+        {
+            $float_rp = $float_chroma;
+            $float_gp = $float_x;
+            $float_bp = 0;
+        }
+        elseif($float_hp < 2)
+        {
+            $float_rp = $float_x;
+            $float_gp = $float_chroma;
+            $float_bp = 0;
+        }
+        elseif($float_hp < 3)
+        {
+            $float_rp = 0;
+            $float_gp = $float_chroma;
+            $float_bp = $float_x;
+        }
+        elseif($float_hp < 4)
+        {
+            $float_rp = 0;
+            $float_gp = $float_x;
+            $float_bp = $float_chroma;
+        }
+        elseif($float_hp < 5)
+        {
+            $float_rp = $float_x;
+            $float_gp = 0;
+            $float_bp = $float_chroma;
+        }
+        elseif($float_hp < 6)
+        {
+            $float_rp = $float_chroma;
+            $float_gp = 0;
+            $float_bp = $float_x;
+        }
+
+        $this->int_r = ceil(($float_rp + $float_m) * 255);
+        $this->int_g = ceil(($float_gp + $float_m) * 255);
+        $this->int_b = ceil(($float_bp + $float_m) * 255);
     }
 
 
