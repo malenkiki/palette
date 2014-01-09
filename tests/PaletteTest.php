@@ -1198,6 +1198,19 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $p = new Malenki\Palette($hsv);
         $this->assertEquals(240, $p->complementary()->h);
         
+        $hsv = new \stdClass();
+        $hsv->h = 0;
+        $hsv->s = 1;
+        $hsv->v = 0.5;
+        $p = new Malenki\Palette($hsv);
+        $this->assertEquals(180, $p->complementary()->h);
+        
+        $hsv = new \stdClass();
+        $hsv->h = 10;
+        $hsv->s = 1;
+        $hsv->v = 0.5;
+        $p = new Malenki\Palette($hsv);
+        $this->assertEquals(190, $p->complementary()->h);
     }
 
 }

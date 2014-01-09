@@ -56,6 +56,7 @@ class Palette
     protected $int_r = 0;
     protected $int_g = 0;
     protected $int_b = 0;
+    protected $original = null;
     protected static $int_precision = null;
     /**
      * Official and unofficial CSS color names.
@@ -234,7 +235,18 @@ class Palette
             }
             elseif(in_array($name, array('h', 's')))
             {
-                return $this->hsl()->$name;
+                if(
+                    is_object($this->original)
+                    &&
+                    in_array($this->original->type, array('hsl','hsv'))
+                )
+                {
+                    return $this->original->value->$name;
+                }
+                else
+                {
+                    return $this->hsl()->$name;
+                }
             }
             elseif($name == 'l')
             {
@@ -414,9 +426,16 @@ class Palette
      */
     protected function fromHsl($float_h, $float_s, $float_l)
     {
+        $this->original = new \stdClass();
+        $this->original->type = 'hsl';
+        $this->original->value = new \stdClass();
+        $this->original->value->h = $float_h;
+        $this->original->value->s = $float_s;
+        $this->original->value->l = $float_l;
+
         $float_chroma = $float_s * (1 - abs(2 * $float_l - 1));
         $float_hp = $float_h / 60;
-        $float_x = $float_chroma * (1 - abs($float_hp % 2 - 1));
+        $float_x = $float_chroma * (1 - abs(fmod($float_hp, 2) - 1));
         $float_m = $float_l - $float_chroma / 2;
 
         if($float_h == 0 && $float_s == 0 && $float_l == 0)
@@ -474,6 +493,11 @@ class Palette
      */
     public function hsl()
     {
+        if(is_object($this->original) && $this->original->type == 'hsl')
+        {
+            return $this->original->value;
+        }
+
         $hsl = new \stdClass();
 
         $float_r = $this->int_r / 255;
@@ -556,46 +580,53 @@ class Palette
      */
     protected function fromHsv($float_h, $float_s, $float_v)
     {
+        $this->original = new \stdClass();
+        $this->original->type = 'hsv';
+        $this->original->value = new \stdClass();
+        $this->original->value->h = $float_h;
+        $this->original->value->s = $float_s;
+        $this->original->value->v = $float_v;
+
         $float_chroma = $float_s * $float_v;
         $float_hp = $float_h / 60;
-        $float_x = $float_chroma * (1 - abs($float_hp % 2 - 1));
+        $float_x = $float_chroma * (1 - abs(fmod($float_hp, 2) - 1));
         $float_m = $float_v - $float_chroma;
 
-        if($float_h == 0 && $float_s == 0 && $float_v == 0)
+        /*if($float_h == 0 && $float_s == 0 && $float_v == 0)
         {
             $float_rp = $float_gp = $float_bp = 0;
         }
-        elseif($float_hp < 1)
+        else*/if($float_h >= 0 && $float_h < 60)
         {
             $float_rp = $float_chroma;
             $float_gp = $float_x;
             $float_bp = 0;
         }
-        elseif($float_hp < 2)
+        elseif($float_h >= 60 && $float_h < 120)
         {
             $float_rp = $float_x;
             $float_gp = $float_chroma;
             $float_bp = 0;
         }
-        elseif($float_hp < 3)
+        elseif($float_h >= 120 && $float_h < 180)
         {
             $float_rp = 0;
             $float_gp = $float_chroma;
             $float_bp = $float_x;
         }
-        elseif($float_hp < 4)
+        elseif($float_h >= 180 && $float_h < 240)
         {
             $float_rp = 0;
             $float_gp = $float_x;
             $float_bp = $float_chroma;
         }
-        elseif($float_hp < 5)
+        elseif($float_h >= 240 && $float_h < 300)
         {
             $float_rp = $float_x;
             $float_gp = 0;
             $float_bp = $float_chroma;
         }
-        elseif($float_hp < 6)
+        elseif($float_h >= 300 && $float_h < 360)
         {
             $float_rp = $float_chroma;
             $float_gp = 0;
@@ -611,6 +642,11 @@ class Palette
 
     public function hsv()
     {
+        if(is_object($this->original) && $this->original->type == 'hsv')
+        {
+            return $this->original->value;
+        }
+
         $hsv = new \stdClass();
 
         $float_r = $this->int_r / 255;
@@ -705,6 +741,14 @@ class Palette
      */
     protected function fromCmyk($float_c, $float_m, $float_y, $float_k)
     {
+        $this->original = new \stdClass();
+        $this->original->type = 'cmyk';
+        $this->original->value = new \stdClass();
+        $this->original->value->c = $float_c;
+        $this->original->value->m = $float_m;
+        $this->original->value->y = $float_y;
+        $this->original->value->k = $float_k;
+
         $func = function($float_cmyk, $float_k){
             return 255 * (1 - $float_cmyk) * (1 - $float_k);
         };
@@ -728,6 +772,11 @@ class Palette
      */
     public function cmyk()
     {
+        if(is_object($this->original) && $this->original->type == 'cmyk')
+        {
+            return $this->original->value;
+        }
+
         $float_r = (float) ($this->int_r / 255);
         $float_g = (float) ($this->int_g / 255);
         $float_b = (float) ($this->int_b / 255);
@@ -791,20 +840,29 @@ class Palette
 
     public function complementary()
     {
-        $hsl = $this->hsl();
-        
         $complementary = new \stdClass();
-        $complementary->s = $hsl->s;
-        $complementary->l = $hsl->l;
 
-
-        if($hsl->h < 180)
+        if(
+            is_object($this->original)
+            &&
+            in_array($this->original->type, array('hsl', 'hsv'))
+        )
         {
-            $complementary->h = $hsl->h + 180;
+            $complementary = $this->original->value;
         }
         else
         {
-            $complementary->h = $hsl->h - 180;
+            $complementary = $this->hsl();
+        }
+
+
+        if($complementary->h < 180)
+        {
+            $complementary->h = $complementary->h + 180;
+        }
+        else
+        {
+            $complementary->h = $complementary->h - 180;
         }
 
         return new self($complementary);
