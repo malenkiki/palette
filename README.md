@@ -40,9 +40,15 @@ var_dump($p->g);
 var_dump($p->b);
 ```
 
-You can get RGB, HSL, HSV, hexadecimal string, CMYK (into futur  hope with icc profile…)
+You can get RGB, HSL, HSV, hexadecimal string, CMYK (into futur hope with ICC profile…)
+
+Complémentary color is easy:
+
+```php
+$p = new \Malenki\Palette('blue');
+echo $p->complementary()->rgb();
+```
 
 Into near futur:
- - complementary color
  - similar color
  - some other stuffs…
