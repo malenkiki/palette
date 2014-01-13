@@ -223,7 +223,7 @@ class Palette
 
     public function __get($name)
     {
-        if(in_array($name, array('r','g','b','c','m','y','k','h','s','l','v')))
+        if(in_array($name, array('r','g','b','c','m','y','k','h','s','l','v','x','y','z')))
         {
             if(in_array($name, array('r', 'g', 'b')))
             {
@@ -255,6 +255,10 @@ class Palette
             elseif($name == 'v')
             {
                 return $this->hsv()->$name;
+            }
+            elseif(in_array($name, array('x', 'y', 'z')))
+            {
+                return $this->xyz()->$name;
             }
         }
     }
@@ -300,6 +304,12 @@ class Palette
             {
                 //TODO Add test
                 $this->fromCmyk($mix_param_1->c, $mix_param_1->m, $mix_param_1->y, $mix_param_1->k);
+            }
+            // XYZ
+            elseif(isset($mix_param_1->x))
+            {
+                //TODO Add test
+                $this->fromXyz($mix_param_1->x, $mix_param_1->y, $mix_param_1->z);
             }
         }
         else
@@ -714,6 +724,14 @@ class Palette
     
     }
 
+
+
+    /**
+     * Gets XYZ values using D65 white point. 
+     * 
+     * @access public
+     * @return \stdClass
+     */
     public function xyz()
     {
         if(is_object($this->original) && $this->original->type == 'xyz')
@@ -724,13 +742,21 @@ class Palette
 
         $xyz = new \stdClass();
 
+        /*
         $matConv = new Math\Matrix(3, 3);
         $matConv
             ->addRow(array(0.412453, 0.357580, 0.180423))
             ->addRow(array(0.212671, 0.715160, 0.072169))
             ->addRow(array(0.019334, 0.119193, 0.950227))
             ;
-
+         */
+        $matConv = new Math\Matrix(3, 3);
+        $matConv
+            ->addRow(array(0.49, 0.31, 0.20))
+            ->addRow(array(0.17697, 0.81240, 0.01063))
+            ->addRow(array(0.00, 0.01, 0.99))
+            ->multiply(1 / 0.17697)
+            ;
         $matRgb = new Math\Matrix(1, 3);
         $matRgb->addCol(
             array($this->int_r / 255, $this->int_g / 255, $this->int_b)
@@ -744,6 +770,60 @@ class Palette
 
         return $xyz;
     }
+    
+    
+    /**
+     * Create color from XYZ system, using D65 white point.
+     *
+     * @see http://www.cs.rit.edu/~ncs/color/t_convert.html#RGB%20to%20XYZ%20&%20XYZ%20to%20RGB 
+     * @see http://www.easyrgb.com/index.php?X=DELT
+     * 
+     * @param mixed $float_x X value
+     * @param mixed $float_y Y value
+     * @param mixed $float_z Z value
+     * @access protected
+     * @return void
+     */
+    protected function fromXyz($float_x, $float_y, $float_z)
+    {
+        $this->original = new \stdClass();
+        $this->original->type = 'xyz';
+        $this->original->value = new \stdClass();
+        $this->original->value->x = $float_x;
+        $this->original->value->y = $float_y;
+        $this->original->value->z = $float_z;
+        
+        /*
+        $matConv = new Math\Matrix(3, 3);
+        $matConv
+            ->addRow(array(3.240479, -1.537150, -0.498535))
+            ->addRow(array(-0.969256, 1.875992, 0.041556))
+            ->addRow(array(0.055648, -0.204043, 1.057311))
+            ;
+         */
+        $matConv = new Math\Matrix(3, 3);
+        $matConv
+            ->addRow(array(0.41847, -0.15866, -0.082835))
+            ->addRow(array(-0.091169, 0.25243, 0.015708))
+            ->addRow(array(0.00092090, -0.0025498, 0.17860))
+            ;
+        $matXyz = new Math\Matrix(1, 3);
+        $matXyz->addCol(array($float_x, $float_y, $float_z));
+        
+        $arrRgb = $matConv->multiply($matXyz)->getCol(0);
+
+        $this->int_r = $arrRgb[0];
+        $this->int_g = $arrRgb[1];
+        $this->int_b = $arrRgb[2];
+        var_dump($arrRgb);
+        /*
+        $this->int_r = 255 * $arrRgb[0];
+        $this->int_g = 255 * $arrRgb[1];
+        $this->int_b = $arrRgb[2];
+         */
+    }
+
+
 
     public function rgb()
     {
