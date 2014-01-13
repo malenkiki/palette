@@ -1,0 +1,68 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "78db594eb9c2da59b52e4af503179047",
+    "packages": [
+        {
+            "name": "malenki/math",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/malenkiki/math.git",
+                "reference": "eedf85f3885bd4ae006a3da8ec1d62d9dc789b9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/malenkiki/math/zipball/eedf85f3885bd4ae006a3da8ec1d62d9dc789b9d",
+                "reference": "eedf85f3885bd4ae006a3da8ec1d62d9dc789b9d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Malenki\\Math": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Petit",
+                    "email": "petit.michel@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Some mathematical stuff",
+            "homepage": "https://github.com/malenkiki/math",
+            "keywords": [
+                "math",
+                "probability",
+                "statistic"
+            ],
+            "time": "2014-01-13 17:06:43"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "malenki/math": 20
+    },
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": [
+
+    ]
+}

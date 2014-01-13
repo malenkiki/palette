@@ -2,7 +2,8 @@
     "name": "malenki/palette",
     "type": "library",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "malenki/math": "dev-master"
     },
     "license": "MIT",
     "authors": [
