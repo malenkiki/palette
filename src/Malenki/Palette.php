@@ -714,6 +714,36 @@ class Palette
     
     }
 
+    public function xyz()
+    {
+        if(is_object($this->original) && $this->original->type == 'xyz')
+        {
+            return $this->original->value;
+        }
+
+
+        $xyz = new \stdClass();
+
+        $matConv = new Math\Matrix(3, 3);
+        $matConv
+            ->addRow(array(0.412453, 0.357580, 0.180423))
+            ->addRow(array(0.212671, 0.715160, 0.072169))
+            ->addRow(array(0.019334, 0.119193, 0.950227))
+            ;
+
+        $matRgb = new Math\Matrix(1, 3);
+        $matRgb->addCol(
+            array($this->int_r / 255, $this->int_g / 255, $this->int_b)
+        );
+
+        $arrXyz = $matConv->multiply($matRgb)->getCol(0);
+
+        $xyz->x = $arrXyz[0];
+        $xyz->y = $arrXyz[1];
+        $xyz->z = $arrXyz[2];
+
+        return $xyz;
+    }
 
     public function rgb()
     {
