@@ -757,7 +757,7 @@ class Palette
             ->addRow(array(0.00, 0.01, 0.99))
             ->multiply(1 / 0.17697)
             ;
-        $matRgb = new Math\Matrix(1, 3);
+        $matRgb = new Math\Matrix(3, 1);
         $matRgb->addCol(
             array($this->int_r / 255, $this->int_g / 255, $this->int_b)
         );
@@ -807,7 +807,7 @@ class Palette
             ->addRow(array(-0.091169, 0.25243, 0.015708))
             ->addRow(array(0.00092090, -0.0025498, 0.17860))
             ;
-        $matXyz = new Math\Matrix(1, 3);
+        $matXyz = new Math\Matrix(3, 1);
         $matXyz->addCol(array($float_x, $float_y, $float_z));
         
         $arrRgb = $matConv->multiply($matXyz)->getCol(0);
