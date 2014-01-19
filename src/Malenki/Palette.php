@@ -58,6 +58,8 @@ class Palette
     protected $int_b = 0;
     protected $original = null;
     protected static $int_precision = null;
+    protected $matrix_xyz = null;
+
     /**
      * Official and unofficial CSS color names.
      *
@@ -277,6 +279,15 @@ class Palette
 
     public function __construct($mix_param_1, $mix_param_2 = null, $mix_param_3 = null, $mix_param_4 = null)
     {
+        $mat_conv = new Math\Matrix(3, 3);
+        $mat_conv
+            ->addRow(array(0.412453, 0.357580, 0.180423))
+            ->addRow(array(0.212671, 0.715160, 0.072169))
+            ->addRow(array(0.019334, 0.119193, 0.950227))
+            ;
+
+        $this->matrix_xyz = $mat_conv;
+        
         if(is_object($mix_param_1))
         {
             // RGB
@@ -742,31 +753,16 @@ class Palette
 
         $xyz = new \stdClass();
 
-        /*
-        $matConv = new Math\Matrix(3, 3);
-        $matConv
-            ->addRow(array(0.412453, 0.357580, 0.180423))
-            ->addRow(array(0.212671, 0.715160, 0.072169))
-            ->addRow(array(0.019334, 0.119193, 0.950227))
-            ;
-         */
-        $matConv = new Math\Matrix(3, 3);
-        $matConv
-            ->addRow(array(0.49, 0.31, 0.20))
-            ->addRow(array(0.17697, 0.81240, 0.01063))
-            ->addRow(array(0.00, 0.01, 0.99))
-            ->multiply(1 / 0.17697)
-            ;
-        $matRgb = new Math\Matrix(3, 1);
-        $matRgb->addCol(
-            array($this->int_r / 255, $this->int_g / 255, $this->int_b)
+        $mat_rgb = new Math\Matrix(3, 1);
+        $mat_rgb->addCol(
+            array($this->int_r / 255, $this->int_g / 255, $this->int_b / 255)
         );
 
-        $arrXyz = $matConv->multiply($matRgb)->getCol(0);
+        $arr_xyz = $this->matrix_xyz->multiply($mat_rgb)->getCol(0);
 
-        $xyz->x = $arrXyz[0];
-        $xyz->y = $arrXyz[1];
-        $xyz->z = $arrXyz[2];
+        $xyz->x = round($arr_xyz[0], 5);
+        $xyz->y = round($arr_xyz[1], 5);
+        $xyz->z = round($arr_xyz[2], 5);
 
         return $xyz;
     }
@@ -793,34 +789,14 @@ class Palette
         $this->original->value->y = $float_y;
         $this->original->value->z = $float_z;
         
-        /*
-        $matConv = new Math\Matrix(3, 3);
-        $matConv
-            ->addRow(array(3.240479, -1.537150, -0.498535))
-            ->addRow(array(-0.969256, 1.875992, 0.041556))
-            ->addRow(array(0.055648, -0.204043, 1.057311))
-            ;
-         */
-        $matConv = new Math\Matrix(3, 3);
-        $matConv
-            ->addRow(array(0.41847, -0.15866, -0.082835))
-            ->addRow(array(-0.091169, 0.25243, 0.015708))
-            ->addRow(array(0.00092090, -0.0025498, 0.17860))
-            ;
-        $matXyz = new Math\Matrix(3, 1);
-        $matXyz->addCol(array($float_x, $float_y, $float_z));
+        $mat_xyz = new Math\Matrix(3, 1);
+        $mat_xyz->addCol(array($float_x, $float_y, $float_z));
         
-        $arrRgb = $matConv->multiply($matXyz)->getCol(0);
+        $arr_rgb = $this->matrix_xyz->inverse()->multiply($mat_xyz)->multiply(255)->getCol(0);
 
-        $this->int_r = $arrRgb[0];
-        $this->int_g = $arrRgb[1];
-        $this->int_b = $arrRgb[2];
-        var_dump($arrRgb);
-        /*
-        $this->int_r = 255 * $arrRgb[0];
-        $this->int_g = 255 * $arrRgb[1];
-        $this->int_b = $arrRgb[2];
-         */
+        $this->int_r = abs(round($arr_rgb[0]));
+        $this->int_g = abs(round($arr_rgb[1]));
+        $this->int_b = abs(round($arr_rgb[2]));
     }
 
 

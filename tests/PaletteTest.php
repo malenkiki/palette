@@ -1213,24 +1213,16 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(190, $p->complementary()->h);
 
         $p = new Malenki\Palette('#FF0050');
-        var_dump($p->xyz());
+        $xyz = $p->xyz();
         
-        $xyz = new \stdClass();
-        $xyz->x = 16.49;
-        $xyz->y = 1.02737;
-        $xyz->z = 79.2;
         $p = new Malenki\Palette($xyz);
-        var_dump($p->hex()); //must be #FF0050
+        $this->assertEquals('#FF0050', $p->hex()); 
         
         $p = new Malenki\Palette('#FFFFFF');
-        var_dump($p->xyz());
-        
-        $xyz = new \stdClass();
-        $xyz->x = 51.8;
-        $xyz->y = 3.70002;
-        $xyz->z = 252.46;
+        $xyz = $p->xyz();
+
         $p = new Malenki\Palette($xyz);
-        var_dump($p->hex()); //must be #FFFFFF
+        $this->assertEquals('#FFFFFF', $p->hex());
     }
 
 }

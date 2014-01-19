@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/malenkiki/math.git",
-                "reference": "eedf85f3885bd4ae006a3da8ec1d62d9dc789b9d"
+                "reference": "6a3943195d511d9d19e12c192fd603064031a817"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/malenkiki/math/zipball/eedf85f3885bd4ae006a3da8ec1d62d9dc789b9d",
-                "reference": "eedf85f3885bd4ae006a3da8ec1d62d9dc789b9d",
+                "url": "https://api.github.com/repos/malenkiki/math/zipball/6a3943195d511d9d19e12c192fd603064031a817",
+                "reference": "6a3943195d511d9d19e12c192fd603064031a817",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                 "probability",
                 "statistic"
             ],
-            "time": "2014-01-13 17:06:43"
+            "time": "2014-01-19 12:08:29"
         }
     ],
     "packages-dev": [
