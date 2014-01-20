@@ -983,4 +983,10 @@ class Palette
     public function isSimilar(Palette $color)
     {
     }
+
+
+    public function __toString()
+    {
+        return $this->hex();
+    }
 }

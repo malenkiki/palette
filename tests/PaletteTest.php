@@ -1273,4 +1273,23 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('black', $p->cssName());
     }
 
+
+    public function testToStringFeature()
+    {
+        $p = new Malenki\Palette(255, 0, 0);
+        $this->assertEquals('#FF0000', $p . '');
+        
+        $p = new Malenki\Palette(0, 255, 0);
+        $this->assertEquals('#00FF00', $p . '');
+        
+        $p = new Malenki\Palette(0, 0, 255);
+        $this->assertEquals('#0000FF', $p . '');
+        
+        $p = new Malenki\Palette(255, 255, 255);
+        $this->assertEquals('#FFFFFF', $p . '');
+        
+        $p = new Malenki\Palette(0, 0, 0);
+        $this->assertEquals('#000000', $p . '');
+    }
+
 }
