@@ -1225,4 +1225,52 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('#FFFFFF', $p->hex());
     }
 
+
+    public function testCheckingIfColorIsCssColorShouldBeTrue()
+    {
+        $p = new Malenki\Palette(255, 0, 0);
+        $this->assertTrue($p->isCss());
+        
+        $p = new Malenki\Palette(0, 255, 0);
+        $this->assertTrue($p->isCss());
+        
+        $p = new Malenki\Palette(0, 0, 255);
+        $this->assertTrue($p->isCss());
+        
+        $p = new Malenki\Palette(255, 255, 255);
+        $this->assertTrue($p->isCss());
+        
+        $p = new Malenki\Palette(0, 0, 0);
+        $this->assertTrue($p->isCss());
+    }
+
+
+    public function testCheckingIfColorIsCssColorShouldBeFalse()
+    {
+        $p = new Malenki\Palette(0, 1, 2);
+        $this->assertFalse($p->isCss());
+        
+        $p = new Malenki\Palette(2, 1, 0);
+        $this->assertFalse($p->isCss());
+    }
+
+
+    public function testGettingCssColorName()
+    {
+        $p = new Malenki\Palette(255, 0, 0);
+        $this->assertEquals('red', $p->cssName());
+        
+        $p = new Malenki\Palette(0, 255, 0);
+        $this->assertEquals('lime', $p->cssName());
+        
+        $p = new Malenki\Palette(0, 0, 255);
+        $this->assertEquals('blue', $p->cssName());
+        
+        $p = new Malenki\Palette(255, 255, 255);
+        $this->assertEquals('white', $p->cssName());
+        
+        $p = new Malenki\Palette(0, 0, 0);
+        $this->assertEquals('black', $p->cssName());
+    }
+
 }

@@ -916,13 +916,37 @@ class Palette
     {
     }
 
+
+
     public function isCss()
     {
+        return !is_null($this->cssName());
     }
 
+
+
+    /**
+     * Get the CSS name if it is one of them. 
+     * 
+     * @access public
+     * @return mixed CSS color name if found or null
+     */
     public function cssName()
     {
+        $str_hex = strtolower($this->hex());
+
+        foreach(self::$arr_colors as $name => $hex)
+        {
+            if($hex == $str_hex)
+            {
+                return $name;
+            }
+        }
+
+        return null;
     }
+
+
 
     public function complementary()
     {
