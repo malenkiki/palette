@@ -40,13 +40,29 @@ var_dump($p->g);
 var_dump($p->b);
 ```
 
-You can get RGB, HSL, HSV, hexadecimal string, CMYK (into futur hope with ICC profile…)
+You can get RGB, HSL, HSV, XYZ, hexadecimal string, CMYK (into futur hope with ICC profile…)
 
 Complémentary color is easy:
 
 ```php
 $p = new \Malenki\Palette('blue');
 echo $p->complementary()->rgb();
+```
+
+Testing if color is one of the set of CSS colors and getting its name is done with the followings:
+
+```php
+$p = new \Malenki\Palette(255, 0, 0);
+
+var_dump($p->isCss()); // should be true in this case
+echo $p->cssName(); // should be 'red' here
+```
+
+Into string context, you get the HTML hexadecimal string:
+
+```php
+$p = new \Malenki\Palette('red');
+echo $p; // should be '#FF0000'
 ```
 
 Into near futur:
