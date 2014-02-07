@@ -53,9 +53,37 @@ namespace Malenki;
  */
 class Palette
 {
+    /**
+     * Red channel into RGB format.
+     * 
+     * @var float
+     * @access protected
+     */
     protected $int_r = 0;
+    
+    /**
+     * Green channel into RGB format.
+     * 
+     * @var float
+     * @access protected
+     */
     protected $int_g = 0;
+
+    /**
+     * Blue channel into RGB format.
+     * 
+     * @var float
+     * @access protected
+     */
     protected $int_b = 0;
+    /**
+     * Original color format used to instanciate current object.
+     * 
+     * If orinal is not RGB, will be object, null otherwise.
+     *
+     * @var mixed
+     * @access protected
+     */
     protected $original = null;
     protected static $int_precision = null;
     protected $matrix_xyz = null;
@@ -223,6 +251,15 @@ class Palette
         }
     }
 
+
+
+    /**
+     * Defines some magic getters to get some channel color 
+     * 
+     * @param mixed $name 
+     * @access public
+     * @return float
+     */
     public function __get($name)
     {
         if(in_array($name, array('r','g','b','c','m','y','k','h','s','l','v','x','y','z')))
@@ -507,7 +544,7 @@ class Palette
 
 
     /**
-     * Output as HSL values. 
+     * Outputs as HSL values. 
      * 
      * @access public
      * @return \stdClass
@@ -661,6 +698,12 @@ class Palette
 
 
 
+    /**
+     * Gets HSV values for the current color. 
+     * 
+     * @access public
+     * @return \stdClass
+     */
     public function hsv()
     {
         if(is_object($this->original) && $this->original->type == 'hsv')
@@ -769,7 +812,7 @@ class Palette
     
     
     /**
-     * Create color from XYZ system, using D65 white point.
+     * Creates color from XYZ system, using D65 white point.
      *
      * @see http://www.cs.rit.edu/~ncs/color/t_convert.html#RGB%20to%20XYZ%20&%20XYZ%20to%20RGB 
      * @see http://www.easyrgb.com/index.php?X=DELT
@@ -918,6 +961,12 @@ class Palette
 
 
 
+    /**
+     * Tests whether the current color is CSS color. 
+     * 
+     * @access public
+     * @return boolean
+     */
     public function isCss()
     {
         return !is_null($this->cssName());
@@ -926,7 +975,7 @@ class Palette
 
 
     /**
-     * Get the CSS name if it is one of them. 
+     * Gets the CSS name if it is one of them. 
      * 
      * @access public
      * @return mixed CSS color name if found or null
@@ -948,6 +997,14 @@ class Palette
 
 
 
+    /**
+     * Gets complementary color.
+     * 
+     * Returns new Palette object for the complementary color.
+     *
+     * @access public
+     * @return Palette
+     */
     public function complementary()
     {
         $complementary = new \stdClass();
@@ -985,6 +1042,12 @@ class Palette
     }
 
 
+    /**
+     * In string context, print color as hexadecimal string. 
+     * 
+     * @access public
+     * @return string
+     */
     public function __toString()
     {
         return $this->hex();
