@@ -40,7 +40,7 @@ var_dump($p->g);
 var_dump($p->b);
 ```
 
-You can get RGB, HSL, HSV, XYZ, hexadecimal string, CMYK (into futur hope with ICC profile…)
+You can get RGB, HSL, HSV, XYZ, hexadecimal string, CMYK (into futur I hope use it with [ICC profile](https://github.com/malenkiki/icc)…)
 
 Complémentary color is easy:
 
