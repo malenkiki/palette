@@ -22,9 +22,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 namespace Malenki;
-
 
 /**
  * Palette, to deal with colors!
@@ -36,7 +34,7 @@ namespace Malenki;
  *  * You have magic get access to some channels.
  *  * You can test whether color is similar to another
  *  * CSS color name
- * 
+ *
  * @property-read $r Red channel of RGB
  * @property-read $g Green channel of RGB
  * @property-read $b Blue channel of RGB
@@ -48,22 +46,22 @@ namespace Malenki;
  * @property-read $m Magenta channel of CMYK
  * @property-read $y Yellow channel of CMYK
  * @property-read $k Black channel of CMYK
- * @author Michel Petit <petit.michel@gmail.com> 
+ * @author Michel Petit <petit.michel@gmail.com>
  * @license MIT
  */
 class Palette
 {
     /**
      * Red channel into RGB format.
-     * 
+     *
      * @var float
      * @access protected
      */
     protected $int_r = 0;
-    
+
     /**
      * Green channel into RGB format.
-     * 
+     *
      * @var float
      * @access protected
      */
@@ -71,14 +69,14 @@ class Palette
 
     /**
      * Blue channel into RGB format.
-     * 
+     *
      * @var float
      * @access protected
      */
     protected $int_b = 0;
     /**
      * Original color format used to instanciate current object.
-     * 
+     *
      * If orinal is not RGB, will be object, null otherwise.
      *
      * @var mixed
@@ -238,42 +236,30 @@ class Palette
         'yellowgreen' => '#9acd32'
     );
 
-
     public static function precision($int = 2)
     {
-        if(is_integer($int) && $int >= 2)
-        {
+        if (is_integer($int) && $int >= 2) {
             self::$int_precision = $int;
-        }
-        else
-        {
+        } else {
             throw \InvalidArgumentException('Preision must be greater or equal to 2');
         }
     }
 
-
-
     /**
-     * Defines some magic getters to get some channel color 
-     * 
-     * @param mixed $name 
+     * Defines some magic getters to get some channel color
+     *
+     * @param  mixed $name
      * @access public
      * @return float
      */
     public function __get($name)
     {
-        if(in_array($name, array('r','g','b','c','m','y','k','h','s','l','v','x','y','z')))
-        {
-            if(in_array($name, array('r', 'g', 'b')))
-            {
+        if (in_array($name, array('r','g','b','c','m','y','k','h','s','l','v','x','y','z'))) {
+            if (in_array($name, array('r', 'g', 'b'))) {
                 return $this->rgb()->$name;
-            }
-            elseif(in_array($name, array('c', 'm', 'y', 'k')))
-            {
+            } elseif (in_array($name, array('c', 'm', 'y', 'k'))) {
                 return $this->cmyk()->$name;
-            }
-            elseif(in_array($name, array('h', 's')))
-            {
+            } elseif (in_array($name, array('h', 's'))) {
                 if(
                     is_object($this->original)
                     &&
@@ -281,22 +267,14 @@ class Palette
                 )
                 {
                     return $this->original->value->$name;
-                }
-                else
-                {
+                } else {
                     return $this->hsl()->$name;
                 }
-            }
-            elseif($name == 'l')
-            {
+            } elseif ($name == 'l') {
                 return $this->hsl()->$name;
-            }
-            elseif($name == 'v')
-            {
+            } elseif ($name == 'v') {
                 return $this->hsv()->$name;
-            }
-            elseif(in_array($name, array('x', 'y', 'z')))
-            {
+            } elseif (in_array($name, array('x', 'y', 'z'))) {
                 return $this->xyz()->$name;
             }
         }
@@ -312,8 +290,6 @@ class Palette
         return self::$int_precision;
     }
 
-
-
     public function __construct($mix_param_1, $mix_param_2 = null, $mix_param_3 = null, $mix_param_4 = null)
     {
         $mat_conv = new Math\Matrix(3, 3);
@@ -324,44 +300,36 @@ class Palette
             ;
 
         $this->matrix_xyz = $mat_conv;
-        
-        if(is_object($mix_param_1))
-        {
+
+        if (is_object($mix_param_1)) {
             // RGB
-            if(isset($mix_param_1->r))
-            {
+            if (isset($mix_param_1->r)) {
                 //TODO Add test
                 $this->int_r = $mix_param_1->r;
                 $this->int_g = $mix_param_1->g;
                 $this->int_b = $mix_param_1->b;
             }
             // HSL
-            elseif(isset($mix_param_1->l))
-            {
+            elseif (isset($mix_param_1->l)) {
                 //TODO Add test
                 $this->fromHsl($mix_param_1->h, $mix_param_1->s, $mix_param_1->l);
             }
             // HSV
-            elseif(isset($mix_param_1->v))
-            {
+            elseif (isset($mix_param_1->v)) {
                 //TODO Add test
                 $this->fromHsv($mix_param_1->h, $mix_param_1->s, $mix_param_1->v);
             }
             // CMYK
-            elseif(isset($mix_param_1->k))
-            {
+            elseif (isset($mix_param_1->k)) {
                 //TODO Add test
                 $this->fromCmyk($mix_param_1->c, $mix_param_1->m, $mix_param_1->y, $mix_param_1->k);
             }
             // XYZ
-            elseif(isset($mix_param_1->x))
-            {
+            elseif (isset($mix_param_1->x)) {
                 //TODO Add test
                 $this->fromXyz($mix_param_1->x, $mix_param_1->y, $mix_param_1->z);
             }
-        }
-        else
-        {
+        } else {
             // Only RGB and CMYK for other ways
             // CMYK
             if(
@@ -439,8 +407,7 @@ class Palette
                 $this->int_r = hexdec($arr[0]);
                 $this->int_g = hexdec($arr[1]);
                 $this->int_b = hexdec($arr[2]);
-            }
-            elseif(
+            } elseif(
                 is_string($mix_param_1)
                 &&
                 array_key_exists(
@@ -463,22 +430,19 @@ class Palette
                 $this->int_r = hexdec($arr[0]);
                 $this->int_g = hexdec($arr[1]);
                 $this->int_b = hexdec($arr[2]);
-            }
-            else
-            {
+            } else {
                 throw new \InvalidArgumentException('Bad scalar values for RGB or CMYK color.');
             }
         }
     }
 
-
     /**
-     * fromHsl 
-     * 
+     * fromHsl
+     *
      * @see http://en.wikipedia.org/wiki/HSL_color_space#Converting_to_RGB
-     * @param float $float_h Angle, 0 to 360° 
-     * @param float $float_s 
-     * @param float $float_l 
+     * @param  float $float_h Angle, 0 to 360°
+     * @param  float $float_s
+     * @param  float $float_l
      * @access protected
      * @return void
      */
@@ -496,42 +460,29 @@ class Palette
         $float_x = $float_chroma * (1 - abs(fmod($float_hp, 2) - 1));
         $float_m = $float_l - $float_chroma / 2;
 
-        if($float_h == 0 && $float_s == 0 && $float_l == 0)
-        {
+        if ($float_h == 0 && $float_s == 0 && $float_l == 0) {
             $float_rp = $float_gp = $float_bp = 0;
-        }
-        elseif($float_hp < 1)
-        {
+        } elseif ($float_hp < 1) {
             $float_rp = $float_chroma;
             $float_gp = $float_x;
             $float_bp = 0;
-        }
-        elseif($float_hp < 2)
-        {
+        } elseif ($float_hp < 2) {
             $float_rp = $float_x;
             $float_gp = $float_chroma;
             $float_bp = 0;
-        }
-        elseif($float_hp < 3)
-        {
+        } elseif ($float_hp < 3) {
             $float_rp = 0;
             $float_gp = $float_chroma;
             $float_bp = $float_x;
-        }
-        elseif($float_hp < 4)
-        {
+        } elseif ($float_hp < 4) {
             $float_rp = 0;
             $float_gp = $float_x;
             $float_bp = $float_chroma;
-        }
-        elseif($float_hp < 5)
-        {
+        } elseif ($float_hp < 5) {
             $float_rp = $float_x;
             $float_gp = 0;
             $float_bp = $float_chroma;
-        }
-        elseif($float_hp < 6)
-        {
+        } elseif ($float_hp < 6) {
             $float_rp = $float_chroma;
             $float_gp = 0;
             $float_bp = $float_x;
@@ -542,17 +493,15 @@ class Palette
         $this->int_b = ceil(($float_bp + $float_m) * 255);
     }
 
-
     /**
-     * Outputs as HSL values. 
-     * 
+     * Outputs as HSL values.
+     *
      * @access public
      * @return \stdClass
      */
     public function hsl()
     {
-        if(is_object($this->original) && $this->original->type == 'hsl')
-        {
+        if (is_object($this->original) && $this->original->type == 'hsl') {
             return $this->original->value;
         }
 
@@ -568,54 +517,38 @@ class Palette
         $float_s = $float_h;
         $float_l = $float_h;
 
-        if($float_max == $float_min)
-        {
+        if ($float_max == $float_min) {
             $float_h = 0.0;
             $float_s = 0.0;
-        }
-        else
-        {
+        } else {
             $float_delta = $float_max - $float_min;
 
-            if($float_l > 0.5)
-            {
+            if ($float_l > 0.5) {
                 $float_s = $float_delta / (2 - $float_max - $float_min);
-            }
-            else
-            {
+            } else {
                 $float_s = $float_delta / ($float_max + $float_min);
             }
 
-
-            if($float_max == $float_r)
-            {
+            if ($float_max == $float_r) {
                 $float_h = ($float_g - $float_b) / $float_delta;
 
-                if($float_g < $float_b)
-                {
+                if ($float_g < $float_b) {
                     $float_h += 6;
                 }
-            }
-            elseif($float_max == $float_g)
-            {
+            } elseif ($float_max == $float_g) {
                 $float_h = ($float_b - $float_r) / $float_delta + 2;
-            }
-            elseif($float_max == $float_b)
-            {
+            } elseif ($float_max == $float_b) {
                 $float_h = ($float_r - $float_g) / $float_delta + 4;
             }
 
             $float_h = $float_h / 6;
         }
 
-        if(self::mustRound())
-        {
+        if (self::mustRound()) {
             $hsl->h = $float_h * 360;
             $hsl->l = round($float_l, self::getPrecision());
             $hsl->s = round($float_s, self::getPrecision());
-        }
-        else
-        {
+        } else {
             $hsl->h = $float_h * 360;
             $hsl->l = $float_l;
             $hsl->s = $float_s;
@@ -624,15 +557,13 @@ class Palette
         return $hsl;
     }
 
-
-
     /**
      * Converts HSV values to RGB.
-     * 
+     *
      * @see http://en.wikipedia.org/wiki/HSL_color_space#Converting_to_RGB
-     * @param float $float_h 
-     * @param float $float_s 
-     * @param float $float_l 
+     * @param  float $float_h
+     * @param  float $float_s
+     * @param  float $float_l
      * @access protected
      * @return void
      */
@@ -650,42 +581,27 @@ class Palette
         $float_x = $float_chroma * (1 - abs(fmod($float_hp, 2) - 1));
         $float_m = $float_v - $float_chroma;
 
-        /*if($float_h == 0 && $float_s == 0 && $float_v == 0)
-        {
-            $float_rp = $float_gp = $float_bp = 0;
-        }
-        else*/if($float_h >= 0 && $float_h < 60)
-        {
+        if($float_h >= 0 && $float_h < 60){
             $float_rp = $float_chroma;
             $float_gp = $float_x;
             $float_bp = 0;
-        }
-        elseif($float_h >= 60 && $float_h < 120)
-        {
+        } elseif ($float_h >= 60 && $float_h < 120) {
             $float_rp = $float_x;
             $float_gp = $float_chroma;
             $float_bp = 0;
-        }
-        elseif($float_h >= 120 && $float_h < 180)
-        {
+        } elseif ($float_h >= 120 && $float_h < 180) {
             $float_rp = 0;
             $float_gp = $float_chroma;
             $float_bp = $float_x;
-        }
-        elseif($float_h >= 180 && $float_h < 240)
-        {
+        } elseif ($float_h >= 180 && $float_h < 240) {
             $float_rp = 0;
             $float_gp = $float_x;
             $float_bp = $float_chroma;
-        }
-        elseif($float_h >= 240 && $float_h < 300)
-        {
+        } elseif ($float_h >= 240 && $float_h < 300) {
             $float_rp = $float_x;
             $float_gp = 0;
             $float_bp = $float_chroma;
-        }
-        elseif($float_h >= 300 && $float_h < 360)
-        {
+        } elseif ($float_h >= 300 && $float_h < 360) {
             $float_rp = $float_chroma;
             $float_gp = 0;
             $float_bp = $float_x;
@@ -696,18 +612,15 @@ class Palette
         $this->int_b = ceil(($float_bp + $float_m) * 255);
     }
 
-
-
     /**
-     * Gets HSV values for the current color. 
-     * 
+     * Gets HSV values for the current color.
+     *
      * @access public
      * @return \stdClass
      */
     public function hsv()
     {
-        if(is_object($this->original) && $this->original->type == 'hsv')
-        {
+        if (is_object($this->original) && $this->original->type == 'hsv') {
             return $this->original->value;
         }
 
@@ -722,77 +635,58 @@ class Palette
         $float_h = $float_max;
         $float_s = $float_max;
         $float_v = $float_max;
-        
+
         $float_delta = $float_max - $float_min;
 
-        if($float_max)
-        {
+        if ($float_max) {
             $float_s = $float_delta / $float_max;
-        }
-        else
-        {
+        } else {
             $float_s = 0.0;
         }
 
-        if($float_max == $float_min)
-        {
+        if ($float_max == $float_min) {
             $float_h = 0.0;
-        }
-        else
-        {
-            if($float_max == $float_r)
-            {
+        } else {
+            if ($float_max == $float_r) {
                 $float_h = ($float_g - $float_b) / $float_delta;
 
-                if($float_g < $float_b)
-                {
+                if ($float_g < $float_b) {
                     $float_h += 6;
                 }
-            }
-            elseif($float_max == $float_g)
-            {
+            } elseif ($float_max == $float_g) {
                 $float_h = ($float_b - $float_r) / $float_delta + 2;
-            }
-            elseif($float_max == $float_b)
-            {
+            } elseif ($float_max == $float_b) {
                 $float_h = ($float_r - $float_g) / $float_delta + 4;
             }
 
             $float_h = $float_h / 6;
         }
 
-        if(self::mustRound())
-        {
+        if (self::mustRound()) {
             $hsv->h = $float_h * 360;
             $hsv->v = round($float_v, self::getPrecision());
             $hsv->s = round($float_s, self::getPrecision());
-        }
-        else
-        {
+        } else {
             $hsv->h = $float_h * 360;
             $hsv->v = $float_v;
             $hsv->s = $float_s;
         }
 
         return $hsv;
-    
+
     }
 
-
-
     /**
-     * Gets XYZ values using D65 white point. 
-     * 
+     * Gets XYZ values using D65 white point.
+     *
      * @access public
      * @return \stdClass
      */
     public function xyz()
     {
-        if(is_object($this->original) && $this->original->type == 'xyz')
-        {
+        if (is_object($this->original) && $this->original->type == 'xyz') {
             return $this->original->value;
         }
-
 
         $xyz = new \stdClass();
 
@@ -809,17 +703,16 @@ class Palette
 
         return $xyz;
     }
-    
-    
+
     /**
      * Creates color from XYZ system, using D65 white point.
      *
-     * @see http://www.cs.rit.edu/~ncs/color/t_convert.html#RGB%20to%20XYZ%20&%20XYZ%20to%20RGB 
+     * @see http://www.cs.rit.edu/~ncs/color/t_convert.html#RGB%20to%20XYZ%20&%20XYZ%20to%20RGB
      * @see http://www.easyrgb.com/index.php?X=DELT
-     * 
-     * @param mixed $float_x X value
-     * @param mixed $float_y Y value
-     * @param mixed $float_z Z value
+     *
+     * @param  mixed $float_x X value
+     * @param  mixed $float_y Y value
+     * @param  mixed $float_z Z value
      * @access protected
      * @return void
      */
@@ -831,18 +724,16 @@ class Palette
         $this->original->value->x = $float_x;
         $this->original->value->y = $float_y;
         $this->original->value->z = $float_z;
-        
+
         $mat_xyz = new Math\Matrix(3, 1);
         $mat_xyz->addCol(array($float_x, $float_y, $float_z));
-        
+
         $arr_rgb = $this->matrix_xyz->inverse()->multiply($mat_xyz)->multiply(255)->getCol(0);
 
         $this->int_r = abs(round($arr_rgb[0]));
         $this->int_g = abs(round($arr_rgb[1]));
         $this->int_b = abs(round($arr_rgb[2]));
     }
-
-
 
     public function rgb()
     {
@@ -854,17 +745,15 @@ class Palette
         return $rgb;
     }
 
-
-
     /**
      * Converts from CMYK to obtains RGV values.
      *
      * **Note:** It is not final version! See note for cmyk() method.
-     * 
-     * @param float $float_c 
-     * @param float $float_m 
-     * @param float $float_y 
-     * @param float $float_k 
+     *
+     * @param  float $float_c
+     * @param  float $float_m
+     * @param  float $float_y
+     * @param  float $float_k
      * @access protected
      * @return void
      */
@@ -878,7 +767,7 @@ class Palette
         $this->original->value->y = $float_y;
         $this->original->value->k = $float_k;
 
-        $func = function($float_cmyk, $float_k){
+        $func = function ($float_cmyk, $float_k) {
             return 255 * (1 - $float_cmyk) * (1 - $float_k);
         };
 
@@ -887,22 +776,18 @@ class Palette
         $this->int_b = $func($float_y, $float_k);
     }
 
-
-
-
     /**
      * Gets CMYK color
      *
-     * **Note:** It is not final version yet! To be OK, it must used ICC! 
-     * 
+     * **Note:** It is not final version yet! To be OK, it must used ICC!
+     *
      * @todo Use ICC file/data to have the right value.
      * @access public
      * @return \stdClass
      */
     public function cmyk()
     {
-        if(is_object($this->original) && $this->original->type == 'cmyk')
-        {
+        if (is_object($this->original) && $this->original->type == 'cmyk') {
             return $this->original->value;
         }
 
@@ -910,11 +795,11 @@ class Palette
         $float_g = (float) ($this->int_g / 255);
         $float_b = (float) ($this->int_b / 255);
 
-        $func = function($float_rgb, $float_k){
-            if($float_k == 1)
-            {
+        $func = function ($float_rgb, $float_k) {
+            if ($float_k == 1) {
                 return 0;
             }
+
             return (1 - $float_rgb - $float_k) / (1 - $float_k);
         };
 
@@ -929,15 +814,13 @@ class Palette
         return $cmyk;
     }
 
-
-
     /**
      * Outputs color as hexadecimal string.
      *
-     * Format used is the same as in HTML/CSS world, something like that: 
-     * `#RRGGBB` where `RR`, `GG` and `BB` are the hexadecimal digit parts for 
+     * Format used is the same as in HTML/CSS world, something like that:
+     * `#RRGGBB` where `RR`, `GG` and `BB` are the hexadecimal digit parts for
      * *red*, *green* and *blue*.
-     * 
+     *
      * @access public
      * @return string
      */
@@ -959,11 +842,9 @@ class Palette
     {
     }
 
-
-
     /**
-     * Tests whether the current color is CSS color. 
-     * 
+     * Tests whether the current color is CSS color.
+     *
      * @access public
      * @return boolean
      */
@@ -972,11 +853,9 @@ class Palette
         return !is_null($this->cssName());
     }
 
-
-
     /**
-     * Gets the CSS name if it is one of them. 
-     * 
+     * Gets the CSS name if it is one of them.
+     *
      * @access public
      * @return mixed CSS color name if found or null
      */
@@ -984,10 +863,8 @@ class Palette
     {
         $str_hex = strtolower($this->hex());
 
-        foreach(self::$arr_colors as $name => $hex)
-        {
-            if($hex == $str_hex)
-            {
+        foreach (self::$arr_colors as $name => $hex) {
+            if ($hex == $str_hex) {
                 return $name;
             }
         }
@@ -995,11 +872,9 @@ class Palette
         return null;
     }
 
-
-
     /**
      * Gets complementary color.
-     * 
+     *
      * Returns new Palette object for the complementary color.
      *
      * @access public
@@ -1016,35 +891,26 @@ class Palette
         )
         {
             $complementary = $this->original->value;
-        }
-        else
-        {
+        } else {
             $complementary = $this->hsl();
         }
 
-
-        if($complementary->h < 180)
-        {
+        if ($complementary->h < 180) {
             $complementary->h = $complementary->h + 180;
-        }
-        else
-        {
+        } else {
             $complementary->h = $complementary->h - 180;
         }
 
         return new self($complementary);
     }
 
-
-
     public function isSimilar(Palette $color)
     {
     }
 
-
     /**
-     * In string context, print color as hexadecimal string. 
-     * 
+     * In string context, print color as hexadecimal string.
+     *
      * @access public
      * @return string
      */

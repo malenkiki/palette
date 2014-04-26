@@ -22,10 +22,8 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 class PaletteTest extends PHPUnit_Framework_TestCase
 {
-
 
     public function testRgb()
     {
@@ -64,7 +62,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb->r, $p->r);
         $this->assertEquals($rgb->g, $p->g);
         $this->assertEquals($rgb->b, $p->b);
-        
+
         // Green
         $rgb = new \stdClass();
         $rgb->r = 0;
@@ -76,7 +74,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb->r, $p->r);
         $this->assertEquals($rgb->g, $p->g);
         $this->assertEquals($rgb->b, $p->b);
-        
+
         // Blue
         $rgb = new \stdClass();
         $rgb->r = 0;
@@ -90,8 +88,6 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb->b, $p->b);
     }
 
-
-
     public function testFromHex()
     {
         $rgb = new \stdClass();
@@ -103,8 +99,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb, $p->rgb());
         $p = new Malenki\Palette('000000');
         $this->assertEquals($rgb, $p->rgb());
-        
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 255;
@@ -114,8 +109,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb, $p->rgb());
         $p = new Malenki\Palette('ffffff');
         $this->assertEquals($rgb, $p->rgb());
-        
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 0;
@@ -127,17 +121,14 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb, $p->rgb());
     }
 
-
-
     public function testHex()
     {
         $p = new Malenki\Palette(0,0,0);
         $this->assertEquals('#000000', $p->hex());
-        
+
         $p = new Malenki\Palette(255,255,255);
         $this->assertEquals('#FFFFFF', $p->hex());
     }
-
 
     public function testFromName()
     {
@@ -150,8 +141,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb, $p->rgb());
         $p = new Malenki\Palette('BLACK');
         $this->assertEquals($rgb, $p->rgb());
-        
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 255;
@@ -161,8 +151,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb, $p->rgb());
         $p = new Malenki\Palette('WHITE');
         $this->assertEquals($rgb, $p->rgb());
-        
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 0;
@@ -172,7 +161,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($rgb, $p->rgb());
         $p = new Malenki\Palette('RED');
         $this->assertEquals($rgb, $p->rgb());
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0xff;
         $rgb->g = 0x8c;
@@ -187,7 +176,6 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $p = new Malenki\Palette('dark-orange');
         $this->assertEquals($rgb, $p->rgb());
     }
-
 
     public function testFromHsl()
     {
@@ -212,7 +200,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-        
+
         // white
         $hsl = new \stdClass();
         $hsl->h = 0;
@@ -232,13 +220,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-        
+
         // red
         $hsl = new \stdClass();
         $hsl->h = 0;
         $hsl->s = 1;
         $hsl->l = 1/2;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 0;
@@ -258,7 +246,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $hsl->h = 120;
         $hsl->s = 1;
         $hsl->l = 1/2;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 255;
@@ -278,7 +266,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $hsl->h = 240;
         $hsl->s = 1;
         $hsl->l = 1/2;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 0;
@@ -330,7 +318,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Magenta
         $hsl = new \stdClass();
         $hsl->h = 300;
@@ -349,7 +337,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Silver
         $hsl = new \stdClass();
         $hsl->h = 0;
@@ -368,7 +356,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Gray
         $hsl = new \stdClass();
         $hsl->h = 0;
@@ -387,7 +375,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Maroon
         $hsl = new \stdClass();
         $hsl->h = 0;
@@ -406,7 +394,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Olive
         $hsl = new \stdClass();
         $hsl->h = 60;
@@ -425,7 +413,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Green
         $hsl = new \stdClass();
         $hsl->h = 120;
@@ -444,7 +432,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Purple
         $hsl = new \stdClass();
         $hsl->h = 300;
@@ -463,7 +451,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Teal
         $hsl = new \stdClass();
         $hsl->h = 180;
@@ -482,7 +470,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl->s, $p->s);
         $this->assertEquals($hsl->l, $p->l);
         //$this->assertEquals(0, $p->v);
-    
+
         // Navy
         $hsl = new \stdClass();
         $hsl->h = 240;
@@ -627,8 +615,6 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsl, $p->hsl());
     }
 
-
-
     public function testFromHsv()
     {
         // black
@@ -657,7 +643,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $hsv->h = 0;
         $hsv->s = 0;
         $hsv->v = 1;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 255;
@@ -673,13 +659,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
         // red
         $hsv = new \stdClass();
         $hsv->h = 0;
         $hsv->s = 1;
         $hsv->v = 1;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 0;
@@ -700,7 +685,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $hsv->h = 120;
         $hsv->s = 1;
         $hsv->v = 1;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 255;
@@ -715,14 +700,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->s, $p->s);
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
-
 
         // blue
         $hsv = new \stdClass();
         $hsv->h = 240;
         $hsv->s = 1;
         $hsv->v = 1;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 0;
@@ -738,13 +722,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
         // Yellow
         $hsv = new \stdClass();
         $hsv->h = 60;
         $hsv->s = 1;
         $hsv->v = 1;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 255;
@@ -760,13 +743,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
         // Cyan
         $hsv = new \stdClass();
         $hsv->h = 180;
         $hsv->s = 1;
         $hsv->v = 1;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 255;
@@ -781,13 +763,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
         // Magenta
         $hsv = new \stdClass();
         $hsv->h = 300;
         $hsv->s = 1;
         $hsv->v = 1;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 255;
         $rgb->g = 0;
@@ -802,13 +783,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-        
         // Silver
         $hsv = new \stdClass();
         $hsv->h = 0;
         $hsv->s = 0;
         $hsv->v = 0.75;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 192;
         $rgb->g = 192;
@@ -823,13 +803,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-        
         // Gray
         $hsv = new \stdClass();
         $hsv->h = 0;
         $hsv->s = 0;
         $hsv->v = 0.5;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 128;
         $rgb->g = 128;
@@ -843,14 +822,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->s, $p->s);
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
-
 
         // Maroon
         $hsv = new \stdClass();
         $hsv->h = 0;
         $hsv->s = 1;
         $hsv->v = 0.5;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 128;
         $rgb->g = 0;
@@ -864,14 +842,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->s, $p->s);
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
-
 
         // Olive
         $hsv = new \stdClass();
         $hsv->h = 60;
         $hsv->s = 1;
         $hsv->v = 0.5;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 128;
         $rgb->g = 128;
@@ -885,14 +862,13 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->s, $p->s);
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
-
 
         // Green
         $hsv = new \stdClass();
         $hsv->h = 120;
         $hsv->s = 1;
         $hsv->v = 0.5;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 128;
@@ -907,13 +883,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
         // Purple
         $hsv = new \stdClass();
         $hsv->h = 300;
         $hsv->s = 1;
         $hsv->v = 0.5;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 128;
         $rgb->g = 0;
@@ -928,13 +903,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
         // Teal
         $hsv = new \stdClass();
         $hsv->h = 180;
         $hsv->s = 1;
         $hsv->v = 0.5;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 128;
@@ -949,13 +923,12 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
         // Navy
         $hsv = new \stdClass();
         $hsv->h = 240;
         $hsv->s = 1;
         $hsv->v = 0.5;
-        
+
         $rgb = new \stdClass();
         $rgb->r = 0;
         $rgb->g = 0;
@@ -970,9 +943,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($hsv->v, $p->v);
         //$this->assertEquals(0, $p->l);
 
-
     }
-
 
     public function testHsv()
     {
@@ -1148,7 +1119,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette(0, 0, 0xff);
         $this->assertEquals($cmyk, $p->cmyk());
-        
+
         // Yellow
         $cmyk = new \stdClass();
         $cmyk->c = 0;
@@ -1158,7 +1129,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette(0xff, 0xff, 0);
         $this->assertEquals($cmyk, $p->cmyk());
-        
+
         // Cyan
         $cmyk = new \stdClass();
         $cmyk->c = 1;
@@ -1168,7 +1139,7 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette(0, 0xff, 0xff);
         $this->assertEquals($cmyk, $p->cmyk());
-        
+
         // Magenta
         $cmyk = new \stdClass();
         $cmyk->c = 0;
@@ -1180,8 +1151,6 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($cmyk, $p->cmyk());
     }
 
-
-
     public function testComplementary()
     {
         $hsv = new \stdClass();
@@ -1190,21 +1159,21 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $hsv->v = 0.5;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals(60, $p->complementary()->h);
-        
+
         $hsv = new \stdClass();
         $hsv->h = 60;
         $hsv->s = 1;
         $hsv->v = 0.5;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals(240, $p->complementary()->h);
-        
+
         $hsv = new \stdClass();
         $hsv->h = 0;
         $hsv->s = 1;
         $hsv->v = 0.5;
         $p = new Malenki\Palette($hsv);
         $this->assertEquals(180, $p->complementary()->h);
-        
+
         $hsv = new \stdClass();
         $hsv->h = 10;
         $hsv->s = 1;
@@ -1214,10 +1183,10 @@ class PaletteTest extends PHPUnit_Framework_TestCase
 
         $p = new Malenki\Palette('#FF0050');
         $xyz = $p->xyz();
-        
+
         $p = new Malenki\Palette($xyz);
-        $this->assertEquals('#FF0050', $p->hex()); 
-        
+        $this->assertEquals('#FF0050', $p->hex());
+
         $p = new Malenki\Palette('#FFFFFF');
         $xyz = $p->xyz();
 
@@ -1225,69 +1194,65 @@ class PaletteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('#FFFFFF', $p->hex());
     }
 
-
     public function testCheckingIfColorIsCssColorShouldBeTrue()
     {
         $p = new Malenki\Palette(255, 0, 0);
         $this->assertTrue($p->isCss());
-        
+
         $p = new Malenki\Palette(0, 255, 0);
         $this->assertTrue($p->isCss());
-        
+
         $p = new Malenki\Palette(0, 0, 255);
         $this->assertTrue($p->isCss());
-        
+
         $p = new Malenki\Palette(255, 255, 255);
         $this->assertTrue($p->isCss());
-        
+
         $p = new Malenki\Palette(0, 0, 0);
         $this->assertTrue($p->isCss());
     }
-
 
     public function testCheckingIfColorIsCssColorShouldBeFalse()
     {
         $p = new Malenki\Palette(0, 1, 2);
         $this->assertFalse($p->isCss());
-        
+
         $p = new Malenki\Palette(2, 1, 0);
         $this->assertFalse($p->isCss());
     }
-
 
     public function testGettingCssColorName()
     {
         $p = new Malenki\Palette(255, 0, 0);
         $this->assertEquals('red', $p->cssName());
-        
+
         $p = new Malenki\Palette(0, 255, 0);
         $this->assertEquals('lime', $p->cssName());
-        
+
         $p = new Malenki\Palette(0, 0, 255);
         $this->assertEquals('blue', $p->cssName());
-        
+
         $p = new Malenki\Palette(255, 255, 255);
         $this->assertEquals('white', $p->cssName());
-        
+
         $p = new Malenki\Palette(0, 0, 0);
         $this->assertEquals('black', $p->cssName());
     }
-
 
     public function testToStringFeature()
     {
         $p = new Malenki\Palette(255, 0, 0);
         $this->assertEquals('#FF0000', $p . '');
-        
+
         $p = new Malenki\Palette(0, 255, 0);
         $this->assertEquals('#00FF00', $p . '');
-        
+
         $p = new Malenki\Palette(0, 0, 255);
         $this->assertEquals('#0000FF', $p . '');
-        
+
         $p = new Malenki\Palette(255, 255, 255);
         $this->assertEquals('#FFFFFF', $p . '');
-        
+
         $p = new Malenki\Palette(0, 0, 0);
         $this->assertEquals('#000000', $p . '');
     }
